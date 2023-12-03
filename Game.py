@@ -6,7 +6,7 @@ import tkinter as tk
 main = tk.Tk()
 
 import mysql.connector as myc
-my = myc.connect(host='localhost', user = 'root', passwd = 'Dongle@123', database = 'score')
+my = myc.connect(host='localhost', user = 'root', passwd = 'Dongle@123', database = 'racinggame')
 
 pygame.init()
 
@@ -80,6 +80,12 @@ def inp(dod):
     def a():
         o = str(t1.get())
         sq(dod,o)
+        main.withdraw()
+        l1.destroy()
+        t1.destroy()
+        b1.destroy()
+        menu()
+    main.deiconify()
     main.title("You Info")
     l1 = tk.Label(main, text = "Your Name")
     l1.pack()
@@ -165,7 +171,7 @@ def menu():
     mnu = True
     while mnu:
         for event in pygame.event.get():
-            print(event)
+            # print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -315,23 +321,30 @@ def game_loop():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
+                    print("Pressed KeyDown-Left")
                     x_change = -5
                 elif event.key == pygame.K_RIGHT:
+                    print("Pressed KeyDown-Right")
                     x_change = 5
                 elif event.key == pygame.K_p:
                     ps = True
                     Pause()
-                elif event.key == pygame.K_UP:
-                    y_change = -3
-                elif event.key == pygame.K_DOWN:
-                    y_change = 3
+                # elif event.key == pygame.K_UP:
+                #     print("Pressed KeyDown-Up")
+                #     y_change = -3
+                # elif event.key == pygame.K_DOWN:
+                #     print("Pressed KeyDown-Down")
+                #     y_change = 3
 
             if event.type == pygame.KEYUP:
+                print("Pressed KeyUp")
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    print("Pressed KeyUp-LeftorRight")
                     x_change = 0
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                    y_change = 0
+            # if event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+            #         print("Pressed KeyUp-UporDown")
+            #         y_change = 0
 
 
         x += x_change
@@ -353,9 +366,9 @@ def game_loop():
             dodged+=1
             thingSpeed+=0.15 
         if y<thingStarty+170:
-            print("y crossover")
+            # print("y crossover")
             if x>thingStartx and x<thingStartx+thingWidth or x+car_width>thingStartx and x+car_width<thingStartx+thingWidth:
-                print("X crossover")
+                # print("X crossover")
                 crash()
                 inp(dodged)
                 menu()
